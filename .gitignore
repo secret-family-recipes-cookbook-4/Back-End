@@ -11,3 +11,4 @@ jspm_packages/
 
 #sqlite3 databases
 *.db3
+node_modules
