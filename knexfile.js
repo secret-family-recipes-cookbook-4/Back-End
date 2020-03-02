@@ -6,24 +6,12 @@ module.exports = {
     connection: { filename: "./data/auth.db3" },
     useNullAsDefault: true,
     pool: {
-      afterCreate: (conn, done) =>{
-        conn.run ('PRAGMA foreign_keys = ON', done)
+      afterCreate: (conn, done) => {
+        conn.run("PRAGMA foreign_keys = ON", done);
       }
     },
     migrations: {
-      directory: "./data/migrations",
-    },
-    seeds: { directory: "./data/seeds" }
-  },
-  production:{
-    client: 'pg',
-    connection: process.env.DATA_URL,
-    pool:{
-      min: 2,
-      max: 10
-    },
-    migrations: {
-      directory: "./data/migrations",
+      directory: "./data/migrations"
     },
     seeds: { directory: "./data/seeds" }
   },
@@ -39,5 +27,17 @@ module.exports = {
     seeds: {
       directory: "./data/seeds"
     }
+  },
+  production: {
+    client: "pg",
+    connection: process.env.DATA_URL,
+    pool: {
+      min: 2,
+      max: 10
+    },
+    migrations: {
+      directory: "./data/migrations"
+    },
+    seeds: { directory: "./data/seeds" }
   }
 };
