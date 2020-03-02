@@ -28,6 +28,7 @@ router.post("/register", (req, res) => {
       res.status(201).json({ created_user: saved, token: token });
     })
     .catch(error => {
+      console.log(error.message)
       res
         .status(500)
         .json({ errorMessage: "Unable to register new user", error });
@@ -55,6 +56,7 @@ router.post("/login", (req, res) => {
       }
     })
     .catch(error => {
+      console.log(error.message)
       res
         .status(500)
         .json({ errorMessage: "An error occurred while signing in", error });
