@@ -23,9 +23,9 @@ router.post("/register", (req, res) => {
   user.password = hash;
 
   Users.add(user)
-    .then(saved => {
-      const token = generateToken(saved);
-      res.status(201).json({ created_user: saved, token: token });
+    .then(user => {
+      const token = generateToken(user);
+      res.status(201).json({ username: user.username, token: token });
     })
     .catch(error => {
       console.log(error.message)
@@ -48,6 +48,7 @@ router.post("/login", (req, res) => {
           .status(200)
           .json({
             message: `Welcome ${user.username}!`,
+            id: user.user_id,
             username: user.username,
             token: token
           });
