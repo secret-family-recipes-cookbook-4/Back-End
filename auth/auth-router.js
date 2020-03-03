@@ -19,6 +19,7 @@ function generateToken(user) {
 router.post("/register", (req, res) => {
   // implement registration
   let user = req.body;
+  let {username, password} = body
   const hash = bcrypt.hashSync(user.password, 10);
   user.password = hash;
 
