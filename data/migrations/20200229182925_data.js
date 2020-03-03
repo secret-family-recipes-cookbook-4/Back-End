@@ -24,7 +24,7 @@ exports.up = async function(knex, Promise) {
 
     tbl.string("source");
     tbl.string("notes");
-    tbl.binary('img_url')
+    tbl.binary("img_url");
   });
   await knex.schema.createTable("ingredients", tbl => {
     tbl.increments();
@@ -63,9 +63,9 @@ exports.up = async function(knex, Promise) {
 
 exports.down = function(knex, Promise) {
   return knex.schema
-    .dropTableIfExists("users")
-    .dropTableIfExists("recipes")
     .dropTableIfExists("ingredients")
     .dropTableIfExists("instructions")
-    .dropTableIfExists("tags");
+    .dropTableIfExists("tags")
+    .dropTableIfExists("recipes")
+    .dropTableIfExists("users");
 };
