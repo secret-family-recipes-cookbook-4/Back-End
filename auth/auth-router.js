@@ -19,17 +19,17 @@ function generateToken(user) {
 router.post("/register", (req, res) => {
   // implement registration
   let user = req.body;
-  let {username, password} = body
+  let { username, password } = body;
   const hash = bcrypt.hashSync(user.password, 10);
   user.password = hash;
 
   Users.add(user)
-    .then(user => {
-      const token = generateToken(user);
-      res.status(201).json({ username: user.username, token: token });
+    .then(saved => {
+      const token = generateToken(saved);
+      res.status(201).json({ username: saved.username, token: token });
     })
     .catch(error => {
-      console.log(error.message)
+      console.log(error.message);
       res
         .status(500)
         .json({ errorMessage: "Unable to register new user", error });
@@ -45,20 +45,18 @@ router.post("/login", (req, res) => {
     .then(user => {
       if (user && bcrypt.compareSync(password, user.password)) {
         const token = generateToken(user);
-        res
-          .status(200)
-          .json({
-            message: `Welcome ${user.username}!`,
-            id: user.id,
-            username: user.username,
-            token: token
-          });
+        res.status(200).json({
+          message: `Welcome ${user.username}!`,
+          id: user.id,
+          username: user.username,
+          token: token
+        });
       } else {
         res.status(401).json({ message: "Invalid Credentials" });
       }
     })
     .catch(error => {
-      console.log(error.message)
+      console.log(error.message);
       res
         .status(500)
         .json({ errorMessage: "An error occurred while signing in", error });
