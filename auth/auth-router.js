@@ -26,13 +26,11 @@ router.post("/register", (req, res) => {
   Users.add(user)
     .then(saved => {
       // const token = generateToken(saved);
-      res.status(201).json({saved});
+      res.status(201).json({ saved });
     })
     .catch(error => {
+      res.status(500).json({ errorMessage: "Unable to register new user" });
       console.log(error.message);
-      res
-        .status(500)
-        .json({ errorMessage: "Unable to register new user", error });
     });
 });
 
