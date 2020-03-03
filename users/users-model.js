@@ -22,7 +22,7 @@ async function add(user) {
 
 function findById(id) {
   return db("users")
-    .select("id", "username")
+    // .select("id", "username")
     .where({ id })
     .first();
 }

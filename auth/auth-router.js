@@ -19,14 +19,14 @@ function generateToken(user) {
 router.post("/register", (req, res) => {
   // implement registration
   let user = req.body;
-  let { username, password } = body;
+  // let { username, password } = body;
   const hash = bcrypt.hashSync(user.password, 10);
   user.password = hash;
 
   Users.add(user)
     .then(saved => {
-      const token = generateToken(saved);
-      res.status(201).json({ username: saved.username, token: token });
+      // const token = generateToken(saved);
+      res.status(201).json({saved});
     })
     .catch(error => {
       console.log(error.message);
