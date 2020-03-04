@@ -1,9 +1,9 @@
 const router = require("express").Router();
 const Recipes = require("./recipes-model");
-const authorize = require("../auth/auth-middleware");
+// const authorize = require("../auth/auth-middleware");
 
 //Get all recipes when user is signed in
-router.get("/", authorize, (req, res) => {
+router.get("/", (req, res) => {
   const userId = req.user.id;
   Recipes.getRecipes(userId)
     .then(recipes => {
@@ -15,7 +15,7 @@ router.get("/", authorize, (req, res) => {
 });
 
 //Get specified recipe by id for signed in user
-router.get("/:id", authorize, (req, res) => {
+router.get("/:id", (req, res) => {
   const recipeId = req.params.id;
   const userId = req.user.id;
   Recipes.getRecipesById(recipeId, userId)
@@ -36,7 +36,7 @@ router.get("/:id", authorize, (req, res) => {
 });
 
 //Post a new recipe added by a signed in user
-router.post("/", authorize, (req, res) => {
+router.post("/", (req, res) => {
   const recipe = req.body;
   const userId = req.user.id;
   Recipes.addRecipe(recipe, userId)
@@ -49,7 +49,7 @@ router.post("/", authorize, (req, res) => {
 });
 
 //Destroy (bc its a cooler word) a recipe by id for signed in user
-router.delete("/:id", authorize, (req, res) => {
+router.delete("/:id", (req, res) => {
   const recipeId = req.params.id;
   const userId = req.user.id;
   Recipes.destroyRecipe(recipeId, userId)
@@ -65,7 +65,7 @@ router.delete("/:id", authorize, (req, res) => {
 });
 
 //Put - update a recipe by id for signed in user
-router.put("/:id", authorize, (req, res) => {
+router.put("/:id", (req, res) => {
   const recipeId = req.params.id;
   const userId = req.user.id;
   const recipeEdit = req.body;
