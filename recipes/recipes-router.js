@@ -4,7 +4,6 @@ const authorize = require("../auth/auth-middleware");
 
 //Get all recipes when user is signed in
 router.get("/", authorize, (req, res) => {
-  
   Recipes.getRecipes()
     .then(recipes => {
       res.status(200).json({ recipes });
@@ -16,8 +15,8 @@ router.get("/", authorize, (req, res) => {
 
 //Get specified recipe by id for signed in user
 router.get("/:id", authorize, (req, res) => {
-  const {id}= req.params;
- 
+  const { id } = req.params;
+
   Recipes.getRecipesById(id)
     .then(recipe => {
       if (!recipe) {
@@ -38,9 +37,9 @@ router.get("/:id", authorize, (req, res) => {
 //Post a new recipe added by a signed in user
 router.post("/", authorize, (req, res) => {
   const newRecipe = req.body;
-  const {id}= req.params;
+  // const {id}= req.params;
 
-  Recipes.addRecipe(newRecipe, id)
+  Recipes.addRecipe(newRecipe)
     .then(recipes => {
       res.status(201).json({ recipes });
     })
@@ -49,42 +48,43 @@ router.post("/", authorize, (req, res) => {
     });
 });
 
-// //Destroy (bc its a cooler word) a recipe by id for signed in user
-// router.delete("/:id", (req, res) => {
-//   const recipeId = req.params.id;
-//   const userId = req.user.id;
-//   Recipes.destroyRecipe(recipeId, userId)
-//     .then(recipes => {
-//       //204 = req received & completed and no content to be sent back
-//       res.status(204).json(recipes);
-//     })
-//     .catch(err => {
-//       res
-//         .status(500)
-//         .json({ errorMessage: "Unable to delete selected recipe", err });
-//     });
-// });
+//Destroy (bc its a cooler word) a recipe by id for signed in user
+router.delete("/:id", authorize, (req, res) => {
+  const { id } = req.params;
 
-// //Put - update a recipe by id for signed in user
-// router.put("/:id", (req, res) => {
-//   const recipeId = req.params.id;
-//   const userId = req.user.id;
-//   const recipeEdit = req.body;
-//   Recipes.editRecipe(recipeId, userId, recipeEdit)
-//     .then(edited => {
-//       if (!edited) {
-//         res
-//           .status(404)
-//           .json({ errorMessage: "Unable to locate specified recipe" });
-//       } else {
-//         res.status(200).json(edited);
-//       }
-//     })
-//     .catch(err => {
-//       res
-//         .status(500)
-//         .json({ errorMessage: "An error occurred while editing recipe", err });
-//     });
-// });
+  Recipes.destroyRecipe(id)
+    .then(recipes => {
+      //204 = req received & completed and no content to be sent back
+      res.status(204).json(recipes);
+    })
+    .catch(err => {
+      res
+        .status(500)
+        .json({ errorMessage: "Unable to delete selected recipe", err });
+    });
+});
+
+//Put - update a recipe by id for signed in user
+router.put("/:id", (req, res) => {
+  const { id } = req.params;
+  // const userId = req.user.id;
+  const recipeEdit = req.body;
+  Recipes.editRecipe(id, recipeEdit)
+    .then(edited => {
+      if (!edited) {
+        res
+          .status(404)
+          .json({ errorMessage: "Unable to locate specified recipe" });
+      } else {
+        console.log(edited);
+        res.status(200).json(edited);
+      }
+    })
+    .catch(err => {
+      res
+        .status(500)
+        .json({ errorMessage: "An error occurred while editing recipe", err });
+    });
+});
 
 module.exports = router;
