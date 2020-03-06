@@ -9,7 +9,7 @@ module.exports = {
 };
 
 async function getRecipes() {
-  return await db("recipes");
+  return await db("recipes")
 }
 
 async function getRecipesById(id) {
