@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const Recipes = require("./recipes-model");
 const authorize = require("../auth/auth-middleware");
+const Users = require("../users/users-model");
 
 //Get all recipes when user is signed in
 router.get("/", authorize, (req, res) => {
@@ -37,14 +38,12 @@ router.get("/:id", authorize, (req, res) => {
 //Post a new recipe added by a signed in user
 router.post("/", authorize, (req, res) => {
   const newRecipe = req.body;
-  // const {id}= req.params;
-
   Recipes.addRecipe(newRecipe)
     .then(recipes => {
       res.status(201).json({ recipes });
     })
     .catch(err => {
-      res.status(500).json({ errorMessage: "Unable to post recipe", err });
+      res.status(501).json({ errorMessage: "Unable to post recipe", err });
     });
 });
 

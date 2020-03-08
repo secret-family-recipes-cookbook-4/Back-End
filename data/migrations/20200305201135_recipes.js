@@ -9,25 +9,21 @@ exports.up = async function(knex, Promise) {
   });
   await knex.schema.createTable("recipes", tbl => {
     tbl.increments();
-    tbl
-      .integer("user_id")
-      .notNullable()
-      .references("id")
-      .inTable("users")
-      .onDelete("CASCADE")
-      .onUpdate("CASCADE");
-
-    tbl
-      .string("title")
-      .notNullable()
-      .unique();
-
-    tbl.string("source");
+    tbl.string("title").notNullable();
+    tbl.string("source").notNullable();
     tbl.string("notes");
     tbl.binary("img_url");
-    tbl.string("ingredients").notNullable();
-    tbl.string("instructions").notNullable();
+    tbl.string("ingredients");
+    tbl.string("instructions");
     tbl.string("tags").notNullable();
+    tbl
+      .integer("user_id")
+      .unsigned()
+      .references("id")
+      .inTable("users")
+      .notNullable()
+      .onDelete("CASCADE")
+      .onUpdate("CASCADE");
   });
 };
 

@@ -9,32 +9,28 @@ module.exports = {
 };
 
 async function getRecipes() {
-  return await db("recipes")
+  return await db("recipes");
 }
 
 async function getRecipesById(id) {
-  return db("recipes")
+  return await db("recipes")
     .where({ id })
     .first();
 }
 
 async function addRecipe(recipe) {
-  const newlyAdded = { ...recipe };
-  return db("recipes")
-    .insert(newlyAdded)
-    .then(() => {
-      return newlyAdded;
-    });
+  const newlyAdded ={...recipe}
+  return await db("recipes").insert(newlyAdded)
 }
 
 async function destroyRecipe(id) {
-  return db("recipes")
+  return await db("recipes")
     .where({ id })
     .del();
 }
 
 async function editRecipe(id, changes) {
-  return db("recipes")
+  return await db("recipes")
     .where({ id })
     .update(changes)
     .then(recipe => {
