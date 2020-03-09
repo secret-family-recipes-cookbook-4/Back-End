@@ -16,8 +16,8 @@ describe("user-model.js", () => {
       //confirm with knex
       const users = await db("users");
 
-      expect(users).toHaveLength(6);
-      expect(users[0].username).toBe("GrandmasCookies");
+      expect(users).toHaveLength(2);
+      expect(users[0].username).toBe("dadechico");
     });
 
     it("should return new user on insert", async () => {
@@ -26,7 +26,7 @@ describe("user-model.js", () => {
         password: "abc123"
       });
 
-      expect(user).toEqual({ id: 1, username: "dadechico" });
+      expect(user).toEqual({ id: 1, username: "dadechico", password: 'abc123' });
     });
   });
 
