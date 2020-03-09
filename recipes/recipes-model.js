@@ -19,8 +19,10 @@ async function getRecipesById(id) {
 }
 
 async function addRecipe(recipe) {
-  const newlyAdded ={...recipe}
-  return await db("recipes").insert(newlyAdded)
+  const [id] = await db("recipes").insert(recipe, "id");
+  return db("recipes")
+    .where({ id })
+    .first();
 }
 
 async function destroyRecipe(id) {

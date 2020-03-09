@@ -39,8 +39,8 @@ router.get("/:id", authorize, (req, res) => {
 router.post("/", authorize, (req, res) => {
   const newRecipe = req.body;
   Recipes.addRecipe(newRecipe)
-    .then(recipes => {
-      res.status(201).json({ recipes });
+    .then(recipe => {
+      res.status(201).json(recipe);
     })
     .catch(err => {
       res.status(501).json({ errorMessage: "Unable to post recipe", err });

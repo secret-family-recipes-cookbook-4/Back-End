@@ -11,10 +11,10 @@ exports.up = async function(knex, Promise) {
     tbl.increments();
     tbl.string("title").notNullable();
     tbl.string("source").notNullable();
-    tbl.string("notes");
-    tbl.binary("img_url");
-    tbl.string("ingredients");
-    tbl.string("instructions");
+    tbl.string("notes").notNullable();
+    tbl.string("img_url");
+    tbl.string("ingredients").notNullable();
+    tbl.string("instructions").notNullable();
     tbl.string("tags").notNullable();
     tbl
       .integer("user_id")
